@@ -1,0 +1,2 @@
+mysql-connector-python==8.0.33
+keyring==24.2.0

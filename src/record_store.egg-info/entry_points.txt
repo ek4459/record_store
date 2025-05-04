@@ -1,0 +1,3 @@
+[console_scripts]
+record-store = main:main
+setup-database = setup_database:main
