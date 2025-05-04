@@ -296,9 +296,7 @@ CREATE TRIGGER UpdateLoyaltyPoints
 AFTER UPDATE ON Orders
 FOR EACH ROW
 BEGIN
-    -- Only process if the status has changed to Processing
     IF NEW.OrderStatus = 'Processing' AND OLD.OrderStatus = 'Pending' THEN
-        -- Calculate and add loyalty points
         SET @order_total = CalculateOrderTotal(NEW.OrderID);
         
         UPDATE Customers c
