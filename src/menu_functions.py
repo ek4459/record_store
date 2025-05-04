@@ -17,7 +17,6 @@ from input_utils import (
     get_record_id
 )
 
-# ===== Menu Display Functions =====
 def show_menu(title: str, options: List[str], is_main_menu: bool = False) -> str:
     print(f"\n{title}:")
     for i, option in enumerate(options, 1):
@@ -39,7 +38,6 @@ def show_main_menu() -> str:
     ], is_main_menu=True)
 
 def show_customer_menu() -> str:
-    """Display the customer management menu and return user's choice."""
     return show_menu("Customer Management", [
         "View Customers",
         "Add Customer",
@@ -48,7 +46,6 @@ def show_customer_menu() -> str:
     ])
 
 def show_band_menu() -> str:
-    """Display the band management menu and return user's choice."""
     return show_menu("Band Management", [
         "View Bands",
         "Add Band",
@@ -57,7 +54,6 @@ def show_band_menu() -> str:
     ])
 
 def show_album_menu() -> str:
-    """Display the album management menu and return user's choice."""
     return show_menu("Album Management", [
         "View Albums",
         "Add Album",
@@ -66,7 +62,6 @@ def show_album_menu() -> str:
     ])
 
 def show_order_menu() -> str:
-    """Display the order management menu and return user's choice."""
     return show_menu("Order Management", [
         "Place Order",
         "View Orders",
@@ -82,7 +77,6 @@ def show_analytics_menu() -> str:
         "View Inventory Analysis"
     ])
 
-# ===== Menu Handling Function =====
 def handle_crud_operations(connection, table_name: str, id_column: str, get_data_func: Callable) -> bool:
     menu_text = {
         "Customers": "Customers",
@@ -117,10 +111,8 @@ def handle_crud_operations(connection, table_name: str, id_column: str, get_data
         add_record(connection, table_name, data)
         return True
     elif choice == "3":
-        # First show all records
         view_records(connection, view_names[table_name])
         
-        # Then get the record ID to update
         record_id = get_record_id(display_name)
         if record_id is not None:
             columns, records = fetch_records(connection, table_name, f"{id_column} = {record_id}")
@@ -130,10 +122,8 @@ def handle_crud_operations(connection, table_name: str, id_column: str, get_data
                 update_record(connection, table_name, record_id, data, id_column=id_column)
         return True
     elif choice == "4":
-        # First show all records
         view_records(connection, view_names[table_name])
         
-        # Then get the record ID to delete
         record_id = get_record_id(display_name)
         if record_id is not None:
             delete_record(connection, table_name, record_id, id_column=id_column)
@@ -145,7 +135,6 @@ def handle_crud_operations(connection, table_name: str, id_column: str, get_data
         return True
 
 def handle_analytics(connection) -> bool:
-    """Handle analytics menu choices."""
     choice = show_analytics_menu()
     view_mapping = {
         "1": "vw_sales_by_genre",
@@ -162,22 +151,17 @@ def handle_analytics(connection) -> bool:
     return True 
 
 def handle_order_menu(connection) -> bool:
-    """Handle order menu choices."""
     choice = show_order_menu()
     if choice == "1":
         return place_order(connection)
     elif choice == "2":
-        # First show all orders
         view_records(connection, "vw_order_details")
         
-        # Then ask if user wants to see items for a specific order
         order_id = get_record_id("Order")
         if order_id is not None:
-            # Show items for the selected order
             view_records(connection, "vw_order_items", f"OrderID = {order_id}")
         return True
     elif choice == "3":
-        # Show all orders and let user select one to cancel
         view_records(connection, "vw_order_details")
         order_id = get_record_id("Order")
         if order_id is not None:
@@ -203,4 +187,4 @@ def handle_menu_choice(connection, choice: str) -> bool:
         return menu_handlers[choice]()
     else:
         print("Invalid choice. Please try again.")
-        return True  # Stay in the menu for invalid choices 
+        return True 
