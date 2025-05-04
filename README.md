@@ -13,7 +13,6 @@ A Python-based record store management system with MySQL database integration.
 
 - Python 3.8 or higher
 - MySQL Server 8.0 or higher
-- Git (for cloning the repository)
 - setuptools (`pip install setuptools`)
 
 ## Installation
