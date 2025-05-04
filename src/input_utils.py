@@ -43,7 +43,6 @@ def get_customer_data(connection, existing_customer: Dict[str, Any] = None) -> D
     data["Phone"] = get_input("Phone (XXX-XXX-XXXX)", existing_customer["Phone"] if existing_customer else None, is_update=is_update)
     data["BirthDate"] = get_input("Birth Date (YYYY-MM-DD)", existing_customer["BirthDate"] if existing_customer else None, is_update=is_update)
     
-    # Handle genre lookup
     data["GenreID"] = handle_lookup(
         connection,
         "Genre",
