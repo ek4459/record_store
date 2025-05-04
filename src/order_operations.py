@@ -35,7 +35,6 @@ def cancel_order(connection, order_id: int) -> bool:
                 ''         
             ))
             
-            # Wait for stored procedure results
             for result in cursor.stored_results():
                 success, message = result.fetchone()
                 print(f"\n{message}")
